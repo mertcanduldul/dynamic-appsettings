@@ -15,6 +15,19 @@ private readonly Dictionary<string, object> _appSettings;
         _configurationRepository = configurationRepository;
         _appSettings = _configurationRepository.ConfigurationList().Result;
     }
+    
+    public bool GetValue<T>(string key, ref T value)
+    {
+        if (_appSettings.TryGetValue(key, out var result))
+        {
+            value = (T)result;
+            return true;
+        }
+        else
+        {
+            return false;
+        }
+    }
 ```
 
 
