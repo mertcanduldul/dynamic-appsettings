@@ -1,5 +1,4 @@
 using dynamic_appsettings.Repository;
-using dynamic_appsettings.Repository.Base;
 using dynamic_appsettings.Services;
 
 var builder = WebApplication.CreateBuilder(args);

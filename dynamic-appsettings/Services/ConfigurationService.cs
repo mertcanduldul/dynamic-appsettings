@@ -1,19 +1,14 @@
-using dynamic_appsettings.Model;
 using dynamic_appsettings.Repository;
 
 namespace dynamic_appsettings.Services;
 
 public class ConfigurationService
 {
-    private readonly ILogger<ConfigurationService> _logger;
-    private readonly ConfigurationRepository _configurationRepository;
     private readonly Dictionary<string, object> _appSettings;
 
-    public ConfigurationService(ILogger<ConfigurationService> logger, ConfigurationRepository configurationRepository)
+    public ConfigurationService(ConfigurationRepository configurationRepository)
     {
-        _logger = logger;
-        _configurationRepository = configurationRepository;
-        _appSettings = _configurationRepository.ConfigurationList().Result;
+        _appSettings = configurationRepository.ConfigurationList().Result;
     }
 
     public bool GetValue<T>(string key, ref T value)
@@ -26,6 +21,18 @@ public class ConfigurationService
         else
         {
             return false;
+        }
+    }
+
+    public string GetValue(string key)
+    {
+        if (_appSettings.TryGetValue(key, out var result))
+        {
+            return result.ToString()!;
+        }
+        else
+        {
+            return string.Empty;
         }
     }
 }

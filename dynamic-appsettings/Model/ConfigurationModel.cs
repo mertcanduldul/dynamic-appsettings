@@ -2,7 +2,7 @@ namespace dynamic_appsettings.Model;
 
 public class ConfigurationModel
 {
-    public int ID { get; set; }
-    public string APP_KEY { get; set; }
-    public string APP_VALUE { get; set; }
+    public int Id { get; set; }
+    public string AppKey { get; set; } = null!;
+    public string AppValue { get; set; } = null!;
 }

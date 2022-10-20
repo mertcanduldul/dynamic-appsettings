@@ -7,23 +7,37 @@ namespace dynamic_appsettings.Controllers;
 [Route("[controller]")]
 public class Main : ControllerBase
 {
-    private readonly IConfiguration _configuration;
     private readonly ConfigurationService _configurationService;
 
     private readonly string _property100;
 
-    public Main(IConfiguration configuration, ConfigurationService configurationService)
+    public Main(ConfigurationService configurationService)
     {
-        _configuration = configuration;
         _configurationService = configurationService;
 
-        // This is the property that I want to change dynamically from Database
-        configurationService.GetValue<string>("Property100", ref _property100);
+        // This is the one property that I want to change dynamically from Database
+        _configurationService.GetValue("Property100", ref _property100!);
     }
 
     [HttpGet]
-    public IActionResult Get()
+    [Route("GetStaticVariable")]
+    public IActionResult GetStaticVariable()
     {
         return Ok(_property100);
+    }
+
+    [HttpGet]
+    [Route("GetDynamicVariable")]
+    public IActionResult GetDynamicVariable(string key)
+    {
+        if (!String.IsNullOrEmpty(_configurationService.GetValue(key)))
+        {
+            var value = _configurationService.GetValue(key);
+            return Ok(new { AppKey = key, AppValue = value });
+        }
+        else
+        {
+            return NotFound();
+        }
     }
 }

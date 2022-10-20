@@ -9,7 +9,7 @@ public class ConfigurationRepository : BaseRepository, IDataRepository<Configura
 {
     public IEnumerable<ConfigurationModel> GetAll()
     {
-        using (IDbConnection dbConnection = _connection)
+        using (IDbConnection dbConnection = Connection)
         {
             string query = @"SELECT * FROM Configuration";
             return dbConnection.Query<ConfigurationModel>(query);
@@ -39,13 +39,13 @@ public class ConfigurationRepository : BaseRepository, IDataRepository<Configura
     public async Task<Dictionary<string, object>> ConfigurationList()
     {
         Dictionary<string, object> configurationList = new Dictionary<string, object>();
-        using (IDbConnection dbConnection = _connection)
+        using (IDbConnection dbConnection = Connection)
         {
             string query = @"SELECT * FROM Configuration";
             var result = await dbConnection.QueryAsync<ConfigurationModel>(query);
             foreach (var item in result)
             {
-                configurationList.Add(item.APP_KEY, item.APP_VALUE);
+                configurationList.Add(item.AppKey, item.AppValue);
             }
         }
 

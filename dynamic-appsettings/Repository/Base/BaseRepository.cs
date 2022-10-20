@@ -1,4 +1,3 @@
-using System;
 using System.Data;
 using Microsoft.Data.SqlClient;
 
@@ -6,9 +5,9 @@ namespace dynamic_appsettings.Repository.Base
 {
     public class BaseRepository
     {
-        internal readonly string _connectionString;
+        private readonly string _connectionString;
 
-        internal IDbConnection _connection
+        internal IDbConnection Connection
         {
             get
             {
@@ -20,8 +19,8 @@ namespace dynamic_appsettings.Repository.Base
         public BaseRepository()
         {
             SqlConnectionStringBuilder builder = new SqlConnectionStringBuilder(ConfigReader.GetConnectionStringsValue("DbConnectionString"));
-            var DbPassword = ConfigReader.GetConnectionStringsValue("DbPassword");
-            builder.Password = DbPassword;
+            var dbPassword = ConfigReader.GetConnectionStringsValue("DbPassword");
+            builder.Password = dbPassword;
             _connectionString = builder.ConnectionString;
         }
     }
