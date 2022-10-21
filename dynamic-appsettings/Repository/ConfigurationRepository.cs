@@ -2,11 +2,13 @@ using System.Data;
 using Dapper;
 using dynamic_appsettings.Model;
 using dynamic_appsettings.Repository.Base;
+using Microsoft.Extensions.Options;
 
 namespace dynamic_appsettings.Repository;
 
 public class ConfigurationRepository : BaseRepository, IDataRepository<ConfigurationModel>
 {
+    #region MyRegion
     public IEnumerable<ConfigurationModel> GetAll()
     {
         using (IDbConnection dbConnection = Connection)
@@ -35,6 +37,7 @@ public class ConfigurationRepository : BaseRepository, IDataRepository<Configura
     {
         throw new NotImplementedException();
     }
+    #endregion
 
     public async Task<Dictionary<string, object>> ConfigurationList()
     {
@@ -51,4 +54,5 @@ public class ConfigurationRepository : BaseRepository, IDataRepository<Configura
 
         return configurationList;
     }
+
 }
