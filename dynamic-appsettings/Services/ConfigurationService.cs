@@ -1,11 +1,11 @@
 using dynamic_appsettings.Repository;
+using dynamic_appsettings.Repository.Interface;
 
 namespace dynamic_appsettings.Services;
 
-public class ConfigurationService
+public class ConfigurationService : IConfigurationService
 {
     private Dictionary<string, object> _appSettings;
-
     public ConfigurationService(ConfigurationRepository configurationRepository)
     {
         _appSettings = configurationRepository.ConfigurationList().Result;
@@ -23,24 +23,10 @@ public class ConfigurationService
             return false;
         }
     }
-    public string GetValue(string key)
+    public Dictionary<string, object> GetAllData() => _appSettings;
+    public void ReloadData()
     {
-        if (_appSettings.TryGetValue(key, out var result))
-        {
-            return result.ToString()!;
-        }
-        else
-        {
-            return string.Empty;
-        }
-    }
-    public Dictionary<string,object> GetAllData()
-    {
-        return _appSettings;
-    }
-    public void Reload()
-    {
-        ConfigurationRepository configurationRepository = new();
+        ConfigurationRepository configurationRepository = new ConfigurationRepository();
         var res = configurationRepository.ConfigurationList().Result;
         _appSettings = res;
     }

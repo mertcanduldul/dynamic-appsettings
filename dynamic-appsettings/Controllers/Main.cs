@@ -15,17 +15,17 @@ public class Main : ControllerBase
     }
 
     [HttpGet]
-    [Route("GetStaticVariable")]
+    [Route("GetAllData")]
     public IActionResult GetAllData()
     {
         return Ok(_configurationService.GetAllData());
     }
-    
+
     [HttpGet]
     [Route("ReloadData")]
     public IActionResult ReloadData()
     {
-        _configurationService.Reload();
+        _configurationService.ReloadData();
         return Ok(_configurationService.GetAllData());
     }
 }

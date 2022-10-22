@@ -2,7 +2,6 @@ using System.Data;
 using Dapper;
 using dynamic_appsettings.Model;
 using dynamic_appsettings.Repository.Base;
-using Microsoft.Extensions.Options;
 
 namespace dynamic_appsettings.Repository;
 
